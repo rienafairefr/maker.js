@@ -294,7 +294,8 @@
             chainsByLayer[layer].sort((a: IChain, b: IChain) => { return b.pathLength - a.pathLength });
 
             if (opts.contain) {
-                var containedChains = getContainment(chainsByLayer[layer], opts.contain);
+                var containChainsOptions: IContainChainsOptions = isObject(opts.contain) ? opts.contain as IContainChainsOptions : { alernateWindings: false };
+                var containedChains = getContainment(chainsByLayer[layer], containChainsOptions);
                 chainsByLayer[layer] = containedChains;
             }
 
@@ -332,7 +333,7 @@
                 if (chainContext === otherChain) return;
                 if (!otherChain.endless) return;
 
-                if (model.isPathInsideModel(firstPath, chainsAsModels[i2])) {
+                if (measure.isPointInsideModel(point.middle(firstPath), chainsAsModels[i2])) {
 
                     //since chains were sorted by pathLength, the smallest pathLength parent will be the parent if contained in multiple chains.
                     parents[i1] = otherChain;

@@ -95,6 +95,7 @@ namespace MakerJs.model {
      * @param modelToExpand Model to expand.
      * @param distance Distance to expand.
      * @param joints Number of points at a joint between paths. Use 0 for round joints, 1 for pointed joints, 2 for beveled joints.
+     * @param combineOptions Optional object containing combine options.
      * @returns Model which surrounds the paths of the original model.
      */
     export function expandPaths(modelToExpand: IModel, distance: number, joints = 0, combineOptions: ICombineOptions = {}): IModel {
@@ -109,6 +110,7 @@ namespace MakerJs.model {
         };
 
         var first = true;
+        var lastFarPoint = combineOptions.farPoint;
 
         var walkOptions: IWalkOptions = {
             onPath: function (walkedPath: IWalkPath) {
@@ -129,6 +131,9 @@ namespace MakerJs.model {
                     if (!first) {
                         combine(result, expandedPathModel, false, true, false, true, combineOptions);
                         combineOptions.measureA.modelsMeasured = false;
+
+                        lastFarPoint = combineOptions.farPoint;
+                        delete combineOptions.farPoint;
                         delete combineOptions.measureB;
                     }
 
@@ -177,6 +182,10 @@ namespace MakerJs.model {
                         //union this little pointy shape with the rest of the result
                         combine(result, straightened, false, true, false, true, combineOptions);
                         combineOptions.measureA.modelsMeasured = false;
+
+                        lastFarPoint = combineOptions.farPoint;
+
+                        delete combineOptions.farPoint;
                         delete combineOptions.measureB;
 
                         //replace the rounded path with the straightened model
@@ -192,14 +201,9 @@ namespace MakerJs.model {
             delete result.models['caps'];
         }
 
-        return result;
-    }
+        combineOptions.farPoint = lastFarPoint;
 
-    /**
-     * Copy of the same name in loops.ts
-     * @private
-     */
-    interface IPathDirectionalWithPrimeContext extends IPathDirectional, IRefPathIdInModel {
+        return result;
     }
 
     /**
@@ -261,7 +265,7 @@ namespace MakerJs.model {
                 var wp = c.links[0].walkedPath;
 
                 //see if it is inside the original model
-                var isInside = isPathInsideModel(wp.pathContext, closed, wp.offset);
+                var isInside = measure.isPointInsideModel(point.middle(wp.pathContext), closed, wp.offset);
 
                 //save the ones we want
                 if (inside && isInside || !inside && !isInside) {
