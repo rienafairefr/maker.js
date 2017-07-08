@@ -520,7 +520,6 @@ namespace MakerJs.exporter {
                 }
             }
 
-            function drawImage(id: string, x: number, y:number, d: ISvgPathData, layer: string, point: IPoint){
             function drawImage(id: string, x: number, y:number, src: string, layer: string, point: IPoint){
                 createElement(
                     "image",
