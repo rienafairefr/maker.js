@@ -451,8 +451,9 @@ namespace MakerJs.exporter {
                 viewBox: viewBox.join(' ')
             };
         }
+        var defaultsvgAttrs = {"xmlns:xlink":"http://www.w3.org/1999/xlink"};
 
-        var svgTag = new XmlTag('svg', <IXmlTagAttrs>extendObject(svgAttrs || {}, opts.svgAttrs));
+        var svgTag = new XmlTag('svg', <IXmlTagAttrs>extendObject(svgAttrs || defaultsvgAttrs, opts.svgAttrs));
 
         append(svgTag.getOpeningTag(false));
 
@@ -520,10 +521,12 @@ namespace MakerJs.exporter {
             }
 
             function drawImage(id: string, x: number, y:number, d: ISvgPathData, layer: string, point: IPoint){
+            function drawImage(id: string, x: number, y:number, src: string, layer: string, point: IPoint){
                 createElement(
                     "image",
                     {
                         "id":id,
+                        "xlink:href":src
                     },layer
                 );
 
