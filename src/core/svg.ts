@@ -519,6 +519,19 @@ namespace MakerJs.exporter {
                 }
             }
 
+            function drawImage(id: string, x: number, y:number, d: ISvgPathData, layer: string, point: IPoint){
+                createElement(
+                    "image",
+                    {
+                        "id":id,
+                    },layer
+                );
+
+                if (opts.annotate) {
+                    drawText(id, point, layer);
+                }
+            }
+
             function circleInPaths(id: string, center: IPoint, radius: number, layer: string, route: string[]) {
                 var d = svgCircleData(radius, opts.accuracy);
 
