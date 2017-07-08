@@ -355,6 +355,15 @@ namespace MakerJs {
     }
 
     /**
+     * Test to see if an object implements the required properties of an image path.
+     * 
+     * @param item The item to test.
+     */
+    export function isPathImage(item: any): boolean {
+        return isPath(item) && (<IPath>item).type == pathType.Image && typeof((<IPathImg>item).src)=="string" && isPoint((<v>item).origin);
+    }
+
+    /**
      * Test to see if an object implements the required properties of an arc in a bezier curve.
      * 
      * @param item The item to test.
@@ -376,7 +385,8 @@ namespace MakerJs {
         Line: "line",
         Circle: "circle",
         Arc: "arc",
-        BezierSeed: "bezier-seed"
+        BezierSeed: "bezier-seed",
+        Image: "image"
     };
 
     /**

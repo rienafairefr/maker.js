@@ -121,6 +121,18 @@ declare namespace MakerJs {
         bezierData: IBezierRange;
     }
     /**
+     * A path that is a svg image.
+     *
+     * Examples:
+     * ```
+     * var image: IPathImg = { type: 'img', src: "https://assets-cdn.github.com/images/modules/logos_page/GitHub-Logo.png"};   //typescript
+     * var image = { type: 'img', src: "https://assets-cdn.github.com/images/modules/logos_page/GitHub-Logo.png"};   //javascript
+     * ```
+     */
+    interface IPathImg extends IPath {
+        src: string;
+    }
+    /**
      * Path objects by id.
      */
     interface IPathMap {
@@ -1259,6 +1271,16 @@ declare namespace MakerJs.paths {
         origin: IPoint;
         end: IPoint;
         constructor(toLine: IPathLine, distance: number, nearPoint: IPoint);
+    }
+    /**
+     * Class for a path for an image
+     *
+     * @param src The src of the image.
+     */
+    class Image implements IPathImg {
+        type: string;
+        origin: IPoint;
+        src: string;
     }
 }
 declare namespace MakerJs.model {

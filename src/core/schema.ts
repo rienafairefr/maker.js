@@ -139,6 +139,19 @@ namespace MakerJs {
         bezierData: IBezierRange;
     }
 
+    /**
+     * A path that is a svg image.
+     * 
+     * Examples:
+     * ```
+     * var image: IPathImg = { type: 'img', src: "https://assets-cdn.github.com/images/modules/logos_page/GitHub-Logo.png"};   //typescript
+     * var image = { type: 'img', src: "https://assets-cdn.github.com/images/modules/logos_page/GitHub-Logo.png"};   //javascript
+     * ```
+     */
+    export interface IPathImg extends IPath {
+        src:string;
+    }
+
     //models
 
     /**

@@ -18,4 +18,9 @@ describe('Paths', function () {
     assert.ok(makerjs.isPathArc(arc));
   });
 
+  it('should create an Image', function () {
+    var img = new makerjs.paths.Image("", 1, 0, 90);
+    assert.ok(makerjs.isPathImage(img));
+  });
+
 });

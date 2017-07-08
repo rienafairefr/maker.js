@@ -389,4 +389,31 @@ namespace MakerJs.paths {
         }
     }
 
+    /**
+     * Class for a path for an image
+     * 
+     * @param src The src of the image.
+     */
+    export class Image implements IPathImg {
+        public type: string;
+        public origin: IPoint;
+        public src: string;
+
+        constructor(...args: any[]) {
+            this.type = pathType.Image;
+
+            switch (args.length) {
+
+                case 1:
+                    this.origin = [0, 0];
+                    this.src = args[0] as string;
+                    break;
+
+                case 2:
+                    this.origin = args[0];
+                    this.src = args[1] as string;
+                    break;
+            }
+        }
+    }
 }
